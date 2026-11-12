@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>For Moumita ♥</title>
+  <meta name="theme-color" content="#0a0a0a">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+/* ==========================================================
+   Moumita's Birthday — styles
+   Palette: black, ivory, muted rose
+   ========================================================== */
+:root {
+  --black: #0a0a0a;
+  --ink: #161416;
+  --ivory: #f4efe6;
+  --white: #ffffff;
+  --rose: #c98a9b;        /* muted rose pink (accent) */
+  --rose-soft: #e8c4cd;
+  --lavender: #e4dcef;
+  --paper-pink: #f6dfe3;
+  --font: 'Poppins', system-ui, sans-serif;
+  --script: 'Caveat', cursive;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--black);
+  color: var(--ivory);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+button { font-family: inherit; cursor: pointer; color: inherit; }
+:focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; }
+.script { font-family: var(--script); color: var(--rose-soft); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* ---------- Views / page transitions ---------- */
+.view {
+  display: none;
+  min-height: 100vh;
+  position: relative;
+  z-index: 2;
+}
+.view.active { display: flex; animation: viewIn .6s ease both; }
+.view.page { flex-direction: column; align-items: center; padding: 88px 20px 60px; }
+@keyframes viewIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* ---------- Buttons ---------- */
+.btn {
+  border: 1px solid var(--rose);
+  background: transparent;
+  padding: 14px 34px;
+  border-radius: 40px;
+  font-size: 1rem;
+  letter-spacing: .04em;
+  transition: transform .3s, box-shadow .3s, background .3s;
+}
+.btn-primary {
+  background: var(--rose);
+  color: var(--black);
+  font-weight: 500;
+  box-shadow: 0 8px 30px rgba(201,138,155,.3);
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(201,138,155,.5); }
+.btn-primary:active { transform: scale(.97); }
+
+.back-btn {
+  position: fixed; top: 16px; left: 16px; z-index: 50;
+  background: rgba(10,10,10,.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(201,138,155,.5);
+  border-radius: 30px;
+  padding: 8px 18px;
+  font-size: .9rem;
+  transition: background .3s, transform .3s;
+}
+.back-btn:hover { background: var(--rose); color: var(--black); transform: translateX(-3px); }
+.back-btn[hidden] { display: none; }
+
+/* ---------- Music button ---------- */
+.music-btn{position:fixed;top:16px;right:16px;z-index:50;width:42px;height:42px;border-radius:50%;background:rgba(10,10,10,.7);backdrop-filter:blur(8px);border:1px solid rgba(201,138,155,.5);font-size:1.1rem;transition:background .3s,transform .3s}
+.music-btn:hover{background:var(--rose);transform:scale(1.08)}
+.music-btn[hidden]{display:none}
+.music-btn.on{animation:beat 2s infinite}
+
+/* ---------- Falling / floating hearts ---------- */
+.hearts-layer { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+.heart {
+  position: absolute; top: -40px;
+  animation: fall linear forwards;
+  will-change: transform;
+}
+@keyframes fall {
+  0% { transform: translate3d(0,-40px,0) rotate(0); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translate3d(var(--drift, 30px), 110vh, 0) rotate(var(--rot, 40deg)); opacity: .9; }
+}
+
+/* ---------- Welcome ---------- */
+#welcome { align-items: center; justify-content: center; text-align: center; padding: 24px; overflow: hidden; }
+.glow {
+  position: absolute; width: min(90vw, 620px); aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,138,155,.28), transparent 65%);
+  animation: breathe 5s ease-in-out infinite;
+}
+@keyframes breathe { 50% { transform: scale(1.15); opacity: .7; } }
+.welcome-box { position: relative; display: grid; gap: 22px; justify-items: center; }
+.welcome-title { font-weight: 300; font-size: clamp(2.2rem, 8vw, 4rem); letter-spacing: .02em; }
+.pulse-heart { display: inline-block; color: var(--rose); animation: beat 1.4s infinite; }
+@keyframes beat { 0%,60%,100% { transform: scale(1); } 20% { transform: scale(1.25); } 40% { transform: scale(1.05); } }
+.welcome-text { font-weight: 300; color: rgba(244,239,230,.75); line-height: 1.8; max-width: 30ch; }
+
+/* ---------- Birthday scene ---------- */
+#birthday { flex-direction: column; align-items: center; justify-content: flex-start; text-align: center; padding: 0 16px 40px; overflow: hidden; }
+
+/* Hanging banner */
+.banner { width: 100%; max-width: 760px; padding-top: 0; transform-origin: top center; }
+.banner-row { display: flex; justify-content: center; gap: clamp(2px, .8vw, 8px); position: relative; padding-top: 6px; margin-bottom: 4px; }
+.banner-row::before { /* the rope */
+  content: ""; position: absolute; top: 0; left: 2%; right: 2%; height: 2px;
+  background: var(--rose-soft); opacity: .7; border-radius: 2px;
+}
+.flag {
+  position: relative; transform-origin: top center;
+  width: clamp(20px, 5.4vw, 44px); padding: 8px 0 10px; margin-top: var(--thread, 18px);
+  background: var(--ivory); color: var(--black);
+  font-weight: 600; font-size: clamp(.85rem, 3.4vw, 1.6rem);
+  clip-path: polygon(0 0, 100% 0, 100% 82%, 50% 100%, 0 82%);
+  box-shadow: 0 6px 14px rgba(0,0,0,.5);
+}
+.flag:nth-child(3n) { background: var(--rose); }
+.flag:nth-child(3n+1) { background: var(--white); }
+.flag::before { /* thread */
+  content: ""; position: absolute; left: 50%; bottom: 100%; width: 1px; height: var(--thread, 18px);
+  background: rgba(244,239,230,.6);
+}
+.flag.space { background: none; box-shadow: none; clip-path: none; width: clamp(8px, 2vw, 20px); }
+.flag.space::before { display: none; }
+
+#birthday .banner { animation: bannerPop 1.1s cubic-bezier(.2,1.5,.4,1) .2s both; }
+@keyframes bannerPop { 0% { transform: scale(.2) translateY(-60px); opacity: 0; } 100% { transform: none; opacity: 1; } }
+#birthday .flag { animation: swing 3.6s ease-in-out 1.4s infinite; animation-delay: calc(1.4s + var(--i) * .12s); }
+@keyframes swing { 0%,100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+
+/* Cake */
+.cake-stage { margin-top: clamp(40px, 9vh, 90px); display: flex; justify-content: center; }
+.cake { display: flex; flex-direction: column-reverse; align-items: center; width: min(280px, 72vw); position: relative; }
+.plate { order: -1; width: 118%; height: 12px; border-radius: 50%; background: linear-gradient(var(--ivory), #cfc8bb); box-shadow: 0 10px 24px rgba(0,0,0,.6); }
+.layer {
+  position: relative; border-radius: 10px 10px 4px 4px;
+  opacity: 0; box-shadow: inset 0 -10px 18px rgba(0,0,0,.12);
+}
+.layer-bottom { width: 100%; height: clamp(54px, 15vw, 72px); background: var(--ivory); order: 0; }
+.layer-mid { order: 1; width: 78%; height: clamp(46px, 13vw, 62px); background: var(--rose); }
+.layer-top { order: 2; width: 55%; height: clamp(40px, 11vw, 52px); background: var(--white); }
+.layer::after { /* frosting with cream drips */
+  content: ""; position: absolute; left: -2px; right: -2px; top: -5px; height: 30px;
+  border-radius: 10px 10px 0 0;
+  background:
+    radial-gradient(ellipse 9px 14px at 14px 18px, var(--cream, #fff) 98%, transparent) 0 0 / 28px 100% repeat-x,
+    linear-gradient(var(--cream, #fff) 0 12px, transparent 12px);
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.15));
+}
+.layer-bottom { --cream: #fbf7f0; }
+.layer-mid { --cream: #f1d6dc; }
+.layer-top { --cream: #fff; }
+
+.sprinkles { position: absolute; inset: 22px 0 0 0; overflow: hidden; }
+.sprinkles i { position: absolute; width: 8px; height: 2.5px; border-radius: 2px; }
+
+/* Cake assembly timeline: each slab drops in with a soft bounce */
+#birthday.play .layer-bottom { animation: drop 1s cubic-bezier(.3,1.3,.5,1) .5s both; }
+#birthday.play .layer-mid { animation: drop 1s cubic-bezier(.3,1.3,.5,1) 1.5s both; }
+#birthday.play .layer-top { animation: drop 1s cubic-bezier(.3,1.3,.5,1) 2.5s both; }
+@keyframes drop {
+  0% { transform: translateY(-110vh) rotate(-6deg); opacity: 1; }
+  70% { opacity: 1; }
+  100% { transform: none; opacity: 1; }
+}
+.plate { opacity: 0; }
+#birthday.play .plate { animation: fadeIn .6s ease .2s both; }
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* Candle + flame */
+.candle { order: 5; position: relative; width: 8px; height: clamp(30px, 9vw, 40px); margin-bottom: -2px;
+  background: repeating-linear-gradient(135deg, var(--rose-soft) 0 5px, var(--white) 5px 10px);
+  border-radius: 3px; opacity: 0; transform-origin: bottom; }
+#birthday.play .candle { animation: candleIn .6s ease 3.6s both; }
+@keyframes candleIn { from { transform: scaleY(0); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
+.wick { position: absolute; top: -5px; left: 3.5px; width: 1px; height: 6px; background: #222; }
+.flame {
+  position: absolute; left: 50%; bottom: calc(100% + 3px); width: 14px; height: 26px; margin-left: -7px;
+  border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%;
+  background: radial-gradient(ellipse at 50% 75%, #fff6d8 0 25%, #ffd27a 55%, #f0a35c 100%);
+  box-shadow: 0 0 14px 4px rgba(255,200,110,.55), 0 0 40px 14px rgba(240,163,92,.25);
+  transform-origin: 50% 100%; opacity: 0; transform: scale(0);
+}
+#birthday.play .flame { animation: ignite .5s ease 4.2s forwards, flicker 1.1s ease-in-out 4.7s infinite; }
+@keyframes ignite { to { opacity: 1; transform: scale(1); } }
+@keyframes flicker {
+  0%,100% { transform: scale(1,1) rotate(-1deg); }
+  20% { transform: scale(.92,1.08) rotate(2deg); }
+  45% { transform: scale(1.05,.94) rotate(-2deg); }
+  70% { transform: scale(.95,1.06) rotate(1.5deg); }
+}
+
+.cake-message {
+  margin-top: 34px; font-family: var(--script); font-size: clamp(1.5rem, 5.5vw, 2.1rem);
+  color: var(--rose-soft); line-height: 1.4; opacity: 0;
+}
+#birthday.play .cake-message { animation: riseIn .9s ease 5s both; }
+.reveal-btn { margin-top: 28px; opacity: 0; }
+#birthday.play .reveal-btn { animation: riseIn .9s ease 5.8s both; }
+@keyframes riseIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+/* ---------- Gallery pages ---------- */
+.page-head { text-align: center; margin-bottom: 34px; }
+.page-head h2 { font-weight: 300; font-size: clamp(1.7rem, 6vw, 2.6rem); letter-spacing: .03em; }
+.page-head .script { font-size: 1.6rem; margin-top: 4px; }
+
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; width: 100%; max-width: 980px; }
+.album-card {
+  position: relative; aspect-ratio: 4 / 5; border: 0; overflow: hidden; border-radius: 16px;
+  background-size: cover; background-position: center; text-align: left;
+  box-shadow: 0 12px 34px rgba(0,0,0,.55); transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s;
+}
+.album-card::before { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,10,.85), rgba(10,10,10,.35)); transition: background .5s; }
+.album-card:hover, .album-card:focus-visible { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(201,138,155,.3); }
+.album-card:hover::before { background: linear-gradient(to top, rgba(10,10,10,.75), rgba(201,138,155,.18)); }
+.album-card span { position: absolute; left: 22px; bottom: 22px; right: 22px; font-family: var(--script); font-size: 2.1rem; font-weight: 700; color: var(--white); }
+.album-card span::after { content: ""; display: block; width: 36px; height: 2px; background: var(--rose); margin-top: 6px; transition: width .4s; }
+.album-card:hover span::after { width: 90px; }
+
+.more-card {
+  margin-top: 36px; width: 100%; max-width: 980px; padding: 34px 20px;
+  background: linear-gradient(135deg, rgba(201,138,155,.18), rgba(228,220,239,.06));
+  border: 1px dashed var(--rose); border-radius: 18px; display: grid; gap: 6px; text-align: center;
+  transition: transform .4s, background .4s, box-shadow .4s;
+}
+.more-card .script { font-size: clamp(1.9rem, 6vw, 2.6rem); }
+.more-card small { color: rgba(244,239,230,.6); font-weight: 300; }
+.more-card:hover { transform: scale(1.02); box-shadow: 0 14px 40px rgba(201,138,155,.25); }
+
+.photo-grid { columns: 2 160px; column-gap: 14px; width: 100%; max-width: 1000px; }
+@media (min-width: 760px) { .photo-grid { columns: 3; } }
+.photo-grid button { display: block; width: 100%; margin-bottom: 14px; border: 0; padding: 0; background: none; border-radius: 12px; overflow: hidden; break-inside: avoid; box-shadow: 0 8px 24px rgba(0,0,0,.5); }
+.photo-grid img { display: block; width: 100%; height: auto; transition: transform .6s, filter .6s; filter: grayscale(.25); }
+.photo-grid button:hover img, .photo-grid button:focus-visible img { transform: scale(1.06); filter: none; }
+
+/* ---------- Lightbox ---------- */
+.lightbox { position: fixed; inset: 0; z-index: 100; background: rgba(5,5,5,.94); display: flex; align-items: center; justify-content: center; animation: fadeIn .3s ease both; }
+.lightbox[hidden] { display: none; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.lightbox img { max-width: 92vw; max-height: 84vh; border-radius: 8px; box-shadow: 0 20px 60px rgba(0,0,0,.7); }
+.lb-btn { position: absolute; background: rgba(255,255,255,.08); border: 1px solid rgba(201,138,155,.5); width: 46px; height: 46px; border-radius: 50%; font-size: 1.5rem; transition: background .3s; }
+.lb-btn:hover { background: var(--rose); color: var(--black); }
+.lb-close { top: 16px; right: 16px; } .lb-prev { left: 12px; } .lb-next { right: 12px; }
+
+/* ---------- More page ---------- */
+.video-wrap { width: 100%; max-width: 820px; border-radius: 18px; overflow: hidden; box-shadow: 0 18px 50px rgba(0,0,0,.6), 0 0 0 1px rgba(201,138,155,.3); background: #000; }
+.video-wrap video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; }
+.wishes-title { font-size: clamp(1.9rem, 6vw, 2.6rem); margin: 56px 0 26px; text-align: center; }
+.wishes { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 34px 26px; width: 100%; max-width: 980px; }
+
+/* Torn paper: wrapper carries the shadow, inner shape is clipped */
+.wish { filter: drop-shadow(0 10px 14px rgba(0,0,0,.55)); transform: rotate(var(--tilt, -1deg)); transition: transform .4s; position: relative; }
+.wish:hover { transform: rotate(0) translateY(-6px) scale(1.02); }
+.paper {
+  position: relative; padding: 44px 28px 36px; min-height: 240px; color: #3b2f33;
+  font-family: var(--script); font-size: 1.55rem; line-height: 1.35;
+  background:
+    repeating-linear-gradient(transparent 0 33px, rgba(120,90,100,.13) 33px 34px),
+    var(--paper, var(--ivory));
+  clip-path: polygon(0 3%, 6% 0, 14% 2%, 23% 0, 33% 3%, 44% 0, 55% 2%, 66% 0, 77% 3%, 88% 1%, 100% 3%,
+                     99% 18%, 100% 34%, 98% 52%, 100% 70%, 99% 86%, 100% 97%,
+                     92% 100%, 83% 97%, 72% 100%, 61% 98%, 50% 100%, 38% 97%, 27% 100%, 15% 98%, 6% 100%, 0 97%,
+                     1% 80%, 0 62%, 2% 44%, 0 26%, 1% 12%);
+}
+.wish:nth-child(2n) .paper { clip-path: polygon(1% 0, 12% 3%, 24% 0, 36% 2%, 47% 0, 59% 3%, 71% 1%, 83% 3%, 94% 0, 100% 2%,
+                     98% 20%, 100% 38%, 99% 58%, 100% 76%, 98% 100%,
+                     88% 97%, 76% 100%, 64% 98%, 52% 100%, 40% 97%, 28% 100%, 16% 98%, 5% 100%, 0 96%,
+                     2% 74%, 0 55%, 1% 36%, 0 15%); }
+.wish.ivory .paper { --paper: var(--ivory); }
+.wish.pink .paper { --paper: var(--paper-pink); }
+.wish.lav .paper { --paper: var(--lavender); }
+.paper .sign { display: block; margin-top: 14px; text-align: right; color: #a1627a; font-weight: 700; }
+.pin { position: absolute; top: -4px; left: 50%; z-index: 3; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f4c7d2, var(--rose) 60%, #8a5465); box-shadow: 0 3px 4px rgba(0,0,0,.4); }
+.deco { position: absolute; font-size: 1.1rem; color: var(--rose); opacity: .85; }
+.deco.d1 { top: 14px; right: 18px; } .deco.d2 { bottom: 12px; left: 16px; font-size: 1.3rem; }
+
+/* ---------- Accessibility: reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01s !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; }
+  .hearts-layer { display: none; }
+}
+
+</style>
+</head>
+<body>
+
+  <!-- Back button: shown on every page except the welcome page -->
+  <button id="backBtn" class="back-btn" aria-label="Go back" hidden>
+    <span aria-hidden="true">←</span> Back
+  </button>
+
+  <button id="musicBtn" class="music-btn" aria-label="Mute music" aria-pressed="false" hidden>♪</button>
+  <div class="hearts-layer" id="heartsLayer" aria-hidden="true"></div>
+
+  <!-- 1. WELCOME -->
+  <section class="view active" id="welcome" data-view="welcome">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="welcome-box">
+      <h1 class="welcome-title">Hey Moumita! <span class="pulse-heart">♥️</span></h1>
+      <p class="welcome-text">I made something special just for you.<br>Are you ready for your surprise?</p>
+      <button class="btn btn-primary" data-go="birthday">Click Me</button>
+    </div>
+  </section>
+
+  <!-- 2. BIRTHDAY CAKE -->
+  <section class="view" id="birthday" data-view="birthday">
+    <h1 class="sr-only">Happy Birthday, Moumita!</h1>
+    <div class="banner" id="banner" aria-hidden="true"></div>
+
+    <div class="cake-stage">
+      <div class="cake" aria-label="A birthday cake with a lit candle" role="img">
+        <div class="candle"><i class="flame"></i><i class="wick"></i></div>
+        <div class="layer layer-top"><span class="sprinkles"></span></div>
+        <div class="layer layer-mid"><span class="sprinkles"></span></div>
+        <div class="layer layer-bottom"><span class="sprinkles"></span></div>
+        <div class="plate"></div>
+      </div>
+    </div>
+
+    <p class="cake-message">Another year of you, and the world is softer for it.<br>Make a wish, Moumita. ♥</p>
+    <button class="btn btn-primary reveal-btn" data-go="gallery">A Beautiful Gallery</button>
+  </section>
+
+  <!-- 3. GALLERY (4 cards + "more") -->
+  <section class="view page" id="gallery" data-view="gallery">
+    <header class="page-head">
+      <h2>Our Little Gallery</h2>
+      <p class="script">moments I'd keep forever</p>
+    </header>
+    <div class="card-grid" id="albumCards"></div>
+    <button class="more-card" data-go="more">
+      <span class="script">There's More for You ♥</span>
+      <small>A video and a few words from my heart</small>
+    </button>
+  </section>
+
+  <!-- 4. ALBUM (filled by JS) -->
+  <section class="view page" id="album" data-view="album">
+    <header class="page-head">
+      <h2 id="albumTitle"></h2>
+      <p class="script" id="albumSub"></p>
+    </header>
+    <div class="photo-grid" id="photoGrid"></div>
+  </section>
+
+  <!-- 5. MORE -->
+  <section class="view page" id="more" data-view="more">
+    <header class="page-head">
+      <h2>There's More for You</h2>
+      <p class="script">press play when you're ready</p>
+    </header>
+
+    <div class="video-wrap">
+      <!-- Replace the src with your own MP4 (e.g. videos/birthday.mp4). No autoplay. -->
+      <video id="birthdayVideo" controls preload="none" playsinline
+             poster="https://picsum.photos/seed/moumita-video/1280/720">
+        <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <h3 class="wishes-title script">A few things I wanted to say…</h3>
+    <div class="wishes" id="wishes"></div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+    <button class="lb-btn lb-close" id="lbClose" aria-label="Close photo">✕</button>
+    <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous photo">‹</button>
+    <img id="lbImg" src="" alt="">
+    <button class="lb-btn lb-next" id="lbNext" aria-label="Next photo">›</button>
+  </div>
+
+  <script>
+/* ==========================================================
+   Moumita's Birthday — behaviour
+   ========================================================== */
+
+/* ----------------------------------------------------------
+   1. CONTENT — edit this section to personalise the site.
+   Swap any `src` with your own photo path, e.g. "images/me1.jpg".
+   ---------------------------------------------------------- */
+const ref = (seed, w = 800, h = 1000) => `https://picsum.photos/seed/${seed}/${w}/${h}`;
+
+// Builds a list of placeholder photos. Replace with real entries later.
+const makePhotos = (prefix, label, count = 8) =>
+  Array.from({ length: count }, (_, i) => ({
+    src: ref(`${prefix}${i}`, 800, i % 3 === 0 ? 1000 : 700),
+    alt: `${label} — reference photo ${i + 1} (replace with your own)`,
+  }));
+
+const ALBUMS = [
+  { id: 'you-and-me',   title: 'You & Me',          sub: 'just us, always',       cover: ref('cover-us'),      photos: makePhotos('us', 'You and me') },
+  { id: 'queen',        title: 'You, the Queen',    sub: 'the main character',    cover: ref('cover-queen'),   photos: makePhotos('queen', 'Moumita portrait') },
+  { id: 'family',       title: 'Your Family',       sub: 'where you come from',   cover: ref('cover-family'),  photos: makePhotos('family', 'Moumita with family') },
+  { id: 'friends',      title: 'You & Your Friends', sub: 'your chosen people',   cover: ref('cover-friends'), photos: makePhotos('friends', 'Moumita with friends') },
+];
+
+const WISHES = [
+  { tone: 'ivory', tilt: -1.5, text: 'On your birthday I hope you feel half as loved as you make everyone around you feel.', sign: 'always yours' },
+  { tone: 'pink',  tilt: 1.2,  text: 'Thank you for the quiet days, the loud laughs, and every little moment that became my favourite.', sign: 'with love' },
+  { tone: 'lav',   tilt: -0.8, text: 'May this year be gentle with you, and may all the dreams you whisper at night come true.', sign: 'forever' },
+  { tone: 'ivory', tilt: 1.6,  text: 'Whatever tomorrow brings, I will be right here, cheering the loudest. Happy birthday, my love.', sign: 'yours, truly' },
+];
+
+const BANNER_ROWS = ['HAPPY BIRTHDAY', 'MOUMITA ♥'];
+
+/* ----------------------------------------------------------
+   2. NAVIGATION — single-page, uses the History API so there
+   are no full reloads and the browser back button works.
+   ---------------------------------------------------------- */
+const PARENT = { birthday: 'welcome', gallery: 'birthday', album: 'gallery', more: 'gallery' };
+const backBtn = document.getElementById('backBtn');
+let current = 'welcome';
+
+function show(view, opts = {}) {
+  const { push = true, albumId = null } = opts;
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.dataset.view === view));
+  current = view;
+  backBtn.hidden = view === 'welcome';
+  window.scrollTo({ top: 0 });
+
+  if (view === 'album' && albumId) renderAlbum(albumId);
+  if (view === 'birthday') playBirthday();
+  startHearts(view);
+
+  if (push) history.pushState({ view, albumId }, '');
+}
+
+// Delegated clicks for any element carrying data-go
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-go]');
+  if (t) { if (current === 'welcome') startMusic(); show(t.dataset.go); }
+});
+
+// App back button goes up one level in the hierarchy
+backBtn.addEventListener('click', () => {
+  const parent = PARENT[current];
+  if (parent) show(parent);
+});
+
+// Browser back/forward buttons
+window.addEventListener('popstate', e => {
+  const s = e.state || { view: 'welcome' };
+  closeLightbox();
+  show(s.view, { push: false, albumId: s.albumId });
+});
+history.replaceState({ view: 'welcome' }, '');
+
+/* ----------------------------------------------------------
+   3. FALLING HEARTS
+   ---------------------------------------------------------- */
+const heartsLayer = document.getElementById('heartsLayer');
+let heartTimer = null;
+const HEART_STYLES = [
+  { color: '#c98a9b', opacity: .9 },
+  { color: '#e8c4cd', opacity: .8 },
+  { color: '#ffffff', opacity: .85 },
+  { color: 'rgba(255,255,255,.22)', opacity: 1 },   // transparent hearts
+  { color: 'rgba(201,138,155,.3)', opacity: 1 },
+];
+
+function spawnHeart() {
+  const h = document.createElement('span');
+  const s = HEART_STYLES[Math.floor(Math.random() * HEART_STYLES.length)];
+  h.className = 'heart';
+  h.textContent = '♥';
+  h.style.left = Math.random() * 100 + 'vw';
+  h.style.fontSize = 10 + Math.random() * 30 + 'px';
+  h.style.color = s.color;
+  h.style.opacity = s.opacity;
+  h.style.setProperty('--drift', (Math.random() * 120 - 60) + 'px');
+  h.style.setProperty('--rot', (Math.random() * 120 - 60) + 'deg');
+  h.style.animationDuration = 6 + Math.random() * 7 + 's';
+  h.addEventListener('animationend', () => h.remove());
+  heartsLayer.appendChild(h);
+}
+
+function startHearts(view) {
+  clearInterval(heartTimer);
+  heartsLayer.innerHTML = '';
+  // Gentle on the welcome page, continuous on the birthday page, soft elsewhere
+  const rate = { welcome: 900, birthday: 280 }[view] || 1600;
+  heartTimer = setInterval(spawnHeart, rate);
+}
+
+/* ----------------------------------------------------------
+   4. BIRTHDAY SCENE (banner, sprinkles, cake replay)
+   ---------------------------------------------------------- */
+function buildBanner() {
+  const banner = document.getElementById('banner');
+  let idx = 0;
+  banner.innerHTML = BANNER_ROWS.map(row => {
+    const flags = [...row].map(ch => {
+      const thread = 14 + Math.floor(Math.random() * 22);
+      const cls = ch === ' ' ? 'flag space' : 'flag';
+      return `<span class="${cls}" style="--thread:${thread}px;--i:${idx++}">${ch === ' ' ? '' : ch}</span>`;
+    }).join('');
+    return `<div class="banner-row">${flags}</div>`;
+  }).join('');
+}
+
+function buildSprinkles() {
+  const colors = ['#c98a9b', '#f4efe6', '#ffffff', '#e8c4cd', '#9a6a78'];
+  document.querySelectorAll('.sprinkles').forEach(box => {
+    box.innerHTML = '';
+    for (let i = 0; i < 16; i++) {
+      const s = document.createElement('i');
+      s.style.left = Math.random() * 94 + '%';
+      s.style.top = Math.random() * 70 + '%';
+      s.style.background = colors[i % colors.length];
+      s.style.transform = `rotate(${Math.random() * 180}deg)`;
+      box.appendChild(s);
+    }
+  });
+}
+
+function playBirthday() {
+  const scene = document.getElementById('birthday');
+  scene.classList.remove('play');
+  void scene.offsetWidth;            // force reflow so animations restart
+  scene.classList.add('play');
+}
+
+/* ----------------------------------------------------------
+   5. GALLERY, ALBUMS AND LIGHTBOX
+   ---------------------------------------------------------- */
+function renderAlbumCards() {
+  const wrap = document.getElementById('albumCards');
+  wrap.innerHTML = '';
+  ALBUMS.forEach(a => {
+    const b = document.createElement('button');
+    b.className = 'album-card';
+    b.style.backgroundImage = `url("${a.cover}")`;
+    b.setAttribute('aria-label', `Open album: ${a.title}`);
+    b.innerHTML = `<span>${a.title}</span>`;
+    b.addEventListener('click', () => show('album', { albumId: a.id }));
+    wrap.appendChild(b);
+  });
+}
+
+let activePhotos = [];
+let lbIndex = 0;
+
+function renderAlbum(id) {
+  const album = ALBUMS.find(a => a.id === id);
+  if (!album) return;
+  activePhotos = album.photos;
+  document.getElementById('albumTitle').textContent = album.title;
+  document.getElementById('albumSub').textContent = album.sub;
+  const grid = document.getElementById('photoGrid');
+  grid.innerHTML = '';
+  album.photos.forEach((p, i) => {
+    const b = document.createElement('button');
+    b.setAttribute('aria-label', `View photo ${i + 1} larger`);
+    b.innerHTML = `<img src="${p.src}" alt="${p.alt}" loading="lazy">`;
+    b.addEventListener('click', () => openLightbox(i));
+    grid.appendChild(b);
+  });
+}
+
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lbImg');
+let lastFocus = null;
+
+function setLightbox(i) {
+  lbIndex = (i + activePhotos.length) % activePhotos.length;
+  lbImg.src = activePhotos[lbIndex].src;
+  lbImg.alt = activePhotos[lbIndex].alt;
+}
+function openLightbox(i) {
+  lastFocus = document.activeElement;
+  setLightbox(i);
+  lb.hidden = false;
+  document.getElementById('lbClose').focus();
+}
+function closeLightbox() {
+  if (lb.hidden) return;
+  lb.hidden = true;
+  if (lastFocus) lastFocus.focus();
+}
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+document.getElementById('lbPrev').addEventListener('click', () => setLightbox(lbIndex - 1));
+document.getElementById('lbNext').addEventListener('click', () => setLightbox(lbIndex + 1));
+lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+document.addEventListener('keydown', e => {
+  if (lb.hidden) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') setLightbox(lbIndex - 1);
+  if (e.key === 'ArrowRight') setLightbox(lbIndex + 1);
+});
+
+/* ----------------------------------------------------------
+   6. WISH CARDS
+   ---------------------------------------------------------- */
+function renderWishes() {
+  document.getElementById('wishes').innerHTML = WISHES.map(w => `
+    <article class="wish ${w.tone}" style="--tilt:${w.tilt}deg">
+      <span class="pin" aria-hidden="true"></span>
+      <div class="paper">
+        <span class="deco d1" aria-hidden="true">✿</span>
+        ${w.text}
+        <span class="sign">— ${w.sign} ♥</span>
+        <span class="deco d2" aria-hidden="true">♥</span>
+      </div>
+    </article>`).join('');
+}
+
+// Pause the video if the user leaves the page (never autoplays)
+function pauseVideo() { document.getElementById('birthdayVideo').pause(); }
+backBtn.addEventListener('click', pauseVideo);
+window.addEventListener('popstate', pauseVideo);
+
+/* ----------------------------------------------------------
+   7. INIT
+   ---------------------------------------------------------- */
+/* ---------- BACKGROUND MUSIC ----------
+   A soft music-box "Happy Birthday" instrumental, synthesised in the
+   browser (no file needed). To use your own track instead, put an MP3 in
+   the same folder and set MUSIC_FILE = 'birthday.mp3'.
+   Browsers only allow sound after a tap, so it starts on "Click Me". */
+const MUSIC_FILE = '';
+const musicBtn = document.getElementById('musicBtn');
+let musicStarted = false, userMuted = false, audioCtx, master, fileAudio;
+
+// [note, length in beats]
+const N = { G4:392, A4:440, B4:494, C5:523, D5:587, E5:659, F5:698, G5:784 };
+const TUNE = [
+  ['G4',.75],['G4',.25],['A4',1],['G4',1],['C5',1],['B4',2],
+  ['G4',.75],['G4',.25],['A4',1],['G4',1],['D5',1],['C5',2],
+  ['G4',.75],['G4',.25],['G5',1],['E5',1],['C5',1],['B4',1],['A4',1],
+  ['F5',.75],['F5',.25],['E5',1],['C5',1],['D5',1],['C5',2],
+];
+const BEAT = 0.78; // seconds per beat (slow and gentle)
+
+function playNote(freq, when, dur) {
+  [[1, .5], [2, .12]].forEach(([mult, vol]) => {   // fundamental + soft bell overtone
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.type = 'sine'; o.frequency.value = freq * mult;
+    g.gain.setValueAtTime(0.0001, when);
+    g.gain.exponentialRampToValueAtTime(vol, when + .02);
+    g.gain.exponentialRampToValueAtTime(0.0001, when + Math.max(dur, .9) * 1.6);
+    o.connect(g).connect(master);
+    o.start(when); o.stop(when + Math.max(dur, .9) * 1.7);
+  });
+}
+function scheduleTune() {
+  let t = audioCtx.currentTime + .1;
+  TUNE.forEach(([n, beats]) => { playNote(N[n], t, beats * BEAT); t += beats * BEAT; });
+  setTimeout(scheduleTune, (t - audioCtx.currentTime + 2.5) * 1000); // short rest, then loop
+}
+function startMusic() {
+  if (musicStarted) return;
+  musicStarted = true;
+  musicBtn.hidden = false;
+  musicBtn.classList.add('on');
+  if (MUSIC_FILE) {
+    fileAudio = new Audio(MUSIC_FILE); fileAudio.loop = true; fileAudio.volume = .5;
+    fileAudio.play().catch(() => {});
+    return;
+  }
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return;
+  audioCtx = new AC();
+  master = audioCtx.createGain(); master.gain.value = .35;
+  // soft echo for a dreamy music-box feel
+  const delay = audioCtx.createDelay(); delay.delayTime.value = .36;
+  const fb = audioCtx.createGain(); fb.gain.value = .3;
+  const wet = audioCtx.createGain(); wet.gain.value = .35;
+  master.connect(audioCtx.destination);
+  master.connect(delay); delay.connect(fb); fb.connect(delay); delay.connect(wet); wet.connect(audioCtx.destination);
+  scheduleTune();
+}
+function setMusic(on) {
+  if (!musicStarted) return;
+  if (fileAudio) { on ? fileAudio.play().catch(() => {}) : fileAudio.pause(); }
+  else if (audioCtx) { on ? audioCtx.resume() : audioCtx.suspend(); }
+  musicBtn.classList.toggle('on', on);
+}
+musicBtn.addEventListener('click', () => {
+  userMuted = !userMuted;
+  setMusic(!userMuted);
+  musicBtn.textContent = userMuted ? '✕' : '♪';
+  musicBtn.setAttribute('aria-pressed', String(userMuted));
+  musicBtn.setAttribute('aria-label', userMuted ? 'Play music' : 'Mute music');
+});
+// Pause the music while the birthday video plays, resume afterwards
+const vid = document.getElementById('birthdayVideo');
+vid.addEventListener('play', () => setMusic(false));
+['pause', 'ended'].forEach(ev => vid.addEventListener(ev, () => { if (!userMuted) setMusic(true); }));
+
+buildBanner();
+buildSprinkles();
+renderAlbumCards();
+renderWishes();
+startHearts('welcome');
+
+</script>
+</body>
+</html>
